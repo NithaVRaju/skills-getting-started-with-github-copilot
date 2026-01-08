@@ -21,8 +21,51 @@ app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
 
 # In-memory activity database
 activities = {
+    "Basketball": {
+        "description": "Team sport focusing on basketball skills and competitive play",
+        "instructor": "Coach Martinez",
+        "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM",
+        "max_participants": 15,
+        "participants": ["alex@mergington.edu"]
+        },
+        "Tennis Club": {
+        "description": "Learn and practice tennis techniques and match play",
+        "instructor": "Coach Williams",
+        "schedule": "Tuesdays and Thursdays, 3:30 PM - 5:00 PM",
+        "max_participants": 10,
+        "participants": ["james@mergington.edu"]
+        },
+        "Debate Team": {
+        "description": "Develop argumentation and public speaking skills through competitive debate",
+        "instructor": "Mrs. Anderson",
+        "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 16,
+        "participants": ["lucas@mergington.edu", "ava@mergington.edu"]
+        },
+        "Science Club": {
+        "description": "Explore scientific concepts through experiments and projects",
+        "instructor": "Dr. Chen",
+        "schedule": "Saturdays, 10:00 AM - 12:00 PM",
+        "max_participants": 18,
+        "participants": ["noah@mergington.edu"]
+        },
+        "Drama Club": {
+        "description": "Perform in theater productions and develop acting skills",
+        "instructor": "Ms. Rodriguez",
+        "schedule": "Mondays and Fridays, 3:30 PM - 5:00 PM",
+        "max_participants": 20,
+        "participants": ["isabella@mergington.edu", "mia@mergington.edu"]
+        },
+        "Visual Arts": {
+        "description": "Create artwork using various mediums including painting, drawing, and sculpture",
+        "instructor": "Mr. Thompson",
+        "schedule": "Thursdays, 3:30 PM - 5:00 PM",
+        "max_participants": 15,
+        "participants": ["charlotte@mergington.edu"]
+        },
     "Chess Club": {
         "description": "Learn strategies and compete in chess tournaments",
+        "instructor": "Mr. Johnson",
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
         "max_participants": 12,
         "participants": ["michael@mergington.edu", "daniel@mergington.edu"]
@@ -61,6 +104,10 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Get the specific activity
     activity = activities[activity_name]
+    
+    # Validate student is not already signed up
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student is already signed up")
 
     # Add student
     activity["participants"].append(email)
